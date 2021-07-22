@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "partie backend du projet 6",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "dimitri",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
