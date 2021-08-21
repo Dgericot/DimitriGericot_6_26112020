@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path')
 
 
 const sauceRoutes = require('./routes/sauce')
@@ -25,15 +26,18 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
+/*
 app.post('/api/sauces', (req, res, next) => {
     delete req.body._id; //Supprime l'id automatiquement généré par MongoDB
     const sauce = new Sauce({
         ...req.body
     });
     sauce.save()
-        .then(() => res.status(201).json({ message: 'Objet enregistré !' }))
+        .then(() => res.status(201).json({ message: 'La sauce est enregistrée !' }))
         .catch(error => res.status(400).json({ error }));
-});
+});*/
+
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 app.use('/api/sauces', sauceRoutes);
