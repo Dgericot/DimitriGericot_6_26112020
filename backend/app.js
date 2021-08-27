@@ -1,14 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
 const mongoose = require('mongoose');
 const path = require('path')
 
+const { CONFIG } = require('./config/config');
+
+require('dotenv').config({ path: process.cwd() + '/.env' });
 
 const sauceRoutes = require('./routes/sauce')
-const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/user');
 
 
-mongoose.connect('mongodb+srv://Dimitri_SoPekocko:PASS@cluster0.oezfi.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {
+/*mongoose.connect(process.env.DATABASE_URL, {*/
+mongoose.connect(CONFIG.databaseUrl, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
@@ -16,6 +21,7 @@ mongoose.connect('mongodb+srv://Dimitri_SoPekocko:PASS@cluster0.oezfi.mongodb.ne
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
+app.use(helmet());
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -26,16 +32,6 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 
-/*
-app.post('/api/sauces', (req, res, next) => {
-    delete req.body._id; //Supprime l'id automatiquement généré par MongoDB
-    const sauce = new Sauce({
-        ...req.body
-    });
-    sauce.save()
-        .then(() => res.status(201).json({ message: 'La sauce est enregistrée !' }))
-        .catch(error => res.status(400).json({ error }));
-});*/
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 

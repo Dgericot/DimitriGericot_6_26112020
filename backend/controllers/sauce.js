@@ -1,5 +1,13 @@
 const Sauce = require('../models/sauce');
 const fs = require('fs');
+const { lookup } = require('dns');
+const { JsonWebTokenError } = require('jsonwebtoken');
+const { options } = require('../routes/sauce');
+const { gunzip } = require('zlib');
+const { join } = require('path');
+const { pathToFileURL } = require('url');
+const { serialize } = require('v8');
+const { AggregationCursor } = require('mongoose');
 
 //Afin de récupérer la liste de toutes les sauces
 exports.getAllSauces = (req, res, next) => {
