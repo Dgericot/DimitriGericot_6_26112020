@@ -6,14 +6,12 @@ const path = require('path');
 const cors = require('cors');
 const { limiter } = require('./middleware/limiter');
 
-const { CONFIG } = require('./config/config');
 
 const sauceRoutes = require('./routes/sauce')
 const userRoutes = require('./routes/user');
 
 
-/*mongoose.connect(process.env.DATABASE_URL, {*/
-mongoose.connect(CONFIG.databaseUrl, {
+mongoose.connect(process.env.DATABASE_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
@@ -29,12 +27,6 @@ app.use(cors({
 
 }));
 
-/*app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-    next();
-});*/
 
 app.use(bodyParser.json());
 
