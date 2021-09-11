@@ -19,13 +19,9 @@ mongoose.connect(process.env.DATABASE_URL, {
     .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
-app.use(helmet());
-app.use(limiter);
-app.use(cors({
-    origin: 'http://localhost:4200',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
 
-}));
+app.use(helmet());
+app.use(cors());
 
 
 app.use(bodyParser.json());
@@ -35,6 +31,6 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 
 
 app.use('/api/sauces', sauceRoutes);
-app.use('/api/auth', userRoutes);
+app.use('/api/auth', limiter, userRoutes);
 
 module.exports = app;

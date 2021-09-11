@@ -63,6 +63,7 @@ exports.deleteSauce = (req, res, next) => {
 
 // Pour rajouter un like ou un dislike à une sauce
 exports.likeOrNot = (req, res, next) => {
+    console.log(req.body);
     if (req.body.like === 1) {
         Sauce.updateOne({ _id: req.params.id }, { $inc: { likes: req.body.like++ }, $push: { usersLiked: req.body.userId } })
             .then((sauce) => res.status(200).json({ message: 'Votre like à été ajouté !' }))
